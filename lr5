@@ -1,0 +1,34 @@
+using System;
+using System.Text;
+
+namespace lr5
+
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.OutputEncoding = UTF8Encoding.UTF8;
+
+            Console.Write("Введіть речення: ");
+            string sentence = Console.ReadLine();
+
+            int currentSpaceCount = 0, maxSpaceCount = 0;
+
+            for (int i = 0; i < sentence.Length; i++)
+            {
+                if (sentence[i] == ' ')
+                {
+                    currentSpaceCount++;
+                    maxSpaceCount = Math.Max(maxSpaceCount, currentSpaceCount);
+                }
+                else
+                {
+                    currentSpaceCount = 0;
+                }
+            }
+
+            Console.WriteLine($"Найбільша кількість пробілів, що розташовані підряд: {maxSpaceCount}");
+        }
+    }
+}

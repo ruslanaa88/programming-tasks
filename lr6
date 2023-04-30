@@ -1,0 +1,102 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace GoodsEnumeration
+{
+    class Program
+    {
+        enum Goods
+        {
+            Dress = 1,
+            Trousers,
+            Shirt,
+            Sneakers,
+            Boots,
+            Shoes,
+            Phone,
+            Laptop,
+            TV
+        }
+
+        static void Main(string[] args)
+        {
+            Console.OutputEncoding = UTF8Encoding.UTF8;
+
+            Console.WriteLine("Перелік товарів:");
+            Console.WriteLine($"{(int)Goods.Dress} - сукня");
+            Console.WriteLine($"{(int)Goods.Trousers} - штани");
+            Console.WriteLine($"{(int)Goods.Shirt} - футболка");
+            Console.WriteLine($"{(int)Goods.Sneakers} - кросівки");
+            Console.WriteLine($"{(int)Goods.Boots} - ботинки");
+            Console.WriteLine($"{(int)Goods.Shoes} - туфлі");
+            Console.WriteLine($"{(int)Goods.Phone} - телефон");
+            Console.WriteLine($"{(int)Goods.Laptop} - ноутбук");
+            Console.WriteLine($"{(int)Goods.TV} - телевізор");
+
+            Console.WriteLine();
+            Console.Write("Введіть номери товарів, які ви бажаєте придбати (відокреміть номери комами): ");
+            string input = Console.ReadLine();
+            
+
+            List<Goods> selectedGoods = new List<Goods>();
+            string[] inputArray = input.Split(',');
+            foreach (string item in inputArray)
+            {
+                if (int.TryParse(item, out int parsedItem) && Enum.IsDefined(typeof(Goods), parsedItem))
+                {
+                    selectedGoods.Add((Goods)parsedItem);
+                }
+                else
+                {
+                    Console.WriteLine($"Помилка: товару з номером {item} не існує.");
+                    return;
+                }
+            }
+            if (selectedGoods.Count == 0)
+            {
+                Console.WriteLine("Помилка: ви не ввели номери товарів, які бажаєте придбати.");
+                return;
+            }
+
+            Console.WriteLine();
+            Console.WriteLine($"Список товарів, які ви хочете придбати:");
+            foreach (Goods item in selectedGoods)
+            {
+                Console.WriteLine($"{GetCategory(item)} - {Enum.GetName(typeof(Goods), item)}");
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("Прізвище автора програми: Шилифост");
+
+            Console.WriteLine();
+            Console.WriteLine("Перелік товарів за групами:");
+            Console.WriteLine("Одяг: сукня, штани, футболка");
+            Console.WriteLine("Взуття: кросівки, ботинки, туфлі");
+            Console.WriteLine("Електротовари: телефон, ноутбук, телевізор");
+
+            Console.ReadKey();
+        }
+        static string GetCategory(Goods item)
+        {
+            switch (item)
+            {
+                case Goods.Dress:
+                case Goods.Trousers:
+                case Goods.Shirt:
+                    return "Одяг";
+                case Goods.Sneakers:
+                case Goods.Boots:
+                case Goods.Shoes:
+                    return "Взуття";
+                case Goods.Phone:
+                case Goods.Laptop:
+                case Goods.TV:
+                    return "Електротовари";
+                default:
+                    return "";
+            }
+        }
+
+    }
+}

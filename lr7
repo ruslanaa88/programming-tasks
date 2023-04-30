@@ -1,0 +1,59 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+
+namespace lr7
+{
+    class Program
+    {
+        static void Main()
+        {
+            Console.OutputEncoding = UTF8Encoding.UTF8;
+
+            // Зчитуємо вміст файлу
+            string filePath = @"D:\УЧЕБА\1.2\Основи програмування\lr7\el0.txt";
+            string fileContent = File.ReadAllText(filePath);
+
+            // Розділяємо вміст файлу на окремі елементи
+            string[] elements = fileContent.Split(' ');
+
+            // Обчислюємо кількість кожного елемента
+            Dictionary<string, int> elementCounts = new Dictionary<string, int>();
+            foreach (string element in elements)
+            {
+                if (!elementCounts.ContainsKey(element))
+                {
+                    elementCounts.Add(element, 0);
+                }
+                elementCounts[element]++;
+            }
+
+            // Знаходимо всі переважні елементи
+            int n = elements.Length;
+            List<string> majorityElements = new List<string>();
+            foreach (KeyValuePair<string, int> pair in elementCounts)
+            {
+                if (pair.Value > n / 2)
+                {
+                    majorityElements.Add(pair.Key);
+                }
+            }
+
+            // Виводимо результат
+            if (majorityElements.Count > 0)
+            {
+                Console.WriteLine("Переважні елементи:");
+                foreach (string element in majorityElements)
+                {
+                    Console.WriteLine(element);
+                }
+            }
+            else
+            {
+                Console.WriteLine("У файлі немає переважних елементів.");
+            }
+        }
+    }
+}
